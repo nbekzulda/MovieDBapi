@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
- 
+
     val apiClient: MovieApi by lazy {
         val logging = HttpLoggingInterceptor(
             HttpLoggingInterceptor.Logger { message -> Log.d("OkHttp", message)}
