@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/movieListFragment">
+
+    <fragment
+        android:id="@+id/movieListFragment"
+        android:name="com.example.moviedbapi.main.popularMovie.MoviePopularFragment"
+        android:label="Movies"
+        tools:layout="@layout/movies_view_fragment">
+        <action
+            android:id="@+id/action_moviesListFragment_to_movieDetailsFragment"
+            app:destination="@+id/movieDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.example.moviedbapi.main.details.MovieInfoFragment"
+        android:label="Movie detail"
+        tools:layout="@layout/movie_info_fragment" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.moviedbapi.main.user.UserFragment"
+        android:label="Profile"
+        tools:layout="@layout/user_fragment" />
+
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.moviedbapi.main.favourite.FavoriteFragment"
+        android:label="Favorite movies"
+        tools:layout="@layout/favorite_movie_fragment" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_detail_favoriteFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cinemaFragment"
+        android:name="com.example.moviedbapi.main.cinema.CinemaFragment"
+        android:label="Cinema"
+        tools:layout="@layout/user_fragment" >
+        <action
+            android:id="@+id/action_cinemaFragment_to_cinemaDetailsFragment"
+            app:destination="@id/cinemaDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cinemaDetailsFragment"
+        android:name="com.example.moviedbapi.main.cinema.details.CinemaInfoFragment"
+        android:label="About cinema"
+        tools:layout="@layout/kinoteatr_info_fragment" />
+    <fragment
+        android:id="@+id/cinemaMapFragment"
+        android:name="com.example.moviedbapi.main.cinema.map.CinemaMapFragment"
+        android:label="fragment_cinema_map"
+        tools:layout="@layout/kinoteatr_location_fragment" >
+        <action
+            android:id="@+id/action_cinemaMapFragment_to_cinemaDetailsFragment"
+            app:destination="@id/cinemaDetailsFragment" />
+    </fragment>
+
+</navigation>
