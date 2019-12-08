@@ -106,7 +106,7 @@ fun MovieRepositoryProvider(movieApi: MovieApi): MovieRepository = MovieReposito
 fun UserRepositoryProvider(movieApi: MovieApi): UserRepository = UserRepositoryImpl(movieApi)
 fun StethoInterceptorProvider(): StethoInterceptor = StethoInterceptor()
 
-
+   
 
 fun OkHttpProvider(
     loggingInterceptor: HttpLoggingInterceptor,
