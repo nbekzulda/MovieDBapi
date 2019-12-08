@@ -34,7 +34,7 @@ class CinemaListAdapter (
 
         override fun clear() { }
     }
- 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : CinemaViewHolder {
         val itemView = inflater.inflate(R.layout.row_item_cinema, parent, false)
         return CinemaViewHolder(itemView)
