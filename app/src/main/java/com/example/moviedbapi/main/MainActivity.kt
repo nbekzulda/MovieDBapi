@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             .setContentTitle(title)
             .setContentText(message)
             .setContentText(contentIntent.toString())
+
 
         val notificationManager = baseContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
