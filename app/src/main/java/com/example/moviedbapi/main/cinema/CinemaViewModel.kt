@@ -18,9 +18,6 @@ class CinemaViewModel(private val cinemaDao: CinemaDao) : ParentViewModel() {
         repository = CinemaRepositoryImpl(cinemaDao)
         liveData = repository.getAllCinemas()
     }
-    override fun handleError(e: Throwable) {
-        if (e is ConnectionFailedException) {
-            //ToDo
-        }
-    }
+
+
 }

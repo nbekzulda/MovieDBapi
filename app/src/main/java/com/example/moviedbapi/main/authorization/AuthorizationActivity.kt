@@ -30,6 +30,7 @@ class AuthorizationActivity : AppCompatActivity(){
         }
         inputData()
     }
+    
     private fun inputData() {
         loginViewModel.liveData.observe(this, Observer { state ->
             when(state) {

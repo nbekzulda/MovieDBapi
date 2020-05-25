@@ -22,7 +22,7 @@ class CinemaInfoViewModel(application: Application) : AndroidViewModel(applicati
 
     fun getCinema(id: Int) {
         viewModelScope.launch {
-            val cinema = repository.getCinema(id)
+             val cinema = repository.getCinema(id)
             cinema.let { cinema->
                 liveData = cinema
             }

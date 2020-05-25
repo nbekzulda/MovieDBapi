@@ -3,10 +3,13 @@ package com.example.moviedbapi.main.popularMovie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.moviedbapi.additonal.ConnectionFailedException
-import com.example.moviedbapi.additonal.launchSafe
 import com.example.moviedbapi.base.ParentViewModel
 import com.example.moviedbapi.data.models.MovieData
+import com.example.moviedbapi.data.models.MovieResponseData
+import com.example.moviedbapi.main.favourite.FavoriteMoviesViewModel
 import com.example.moviedbapi.repository.MovieRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -15,46 +18,38 @@ class MoviePopularViewModel(private val movieRepository: MovieRepository) : Pare
     private val _liveData = MutableLiveData<State>()
     val liveData: LiveData<State>
         get() = _liveData
-    override fun handleError(e: Throwable) {
-        _liveData.value =
-            State.HideLoading
-        if(e is ConnectionFailedException) {
-            _liveData.value =
-                State.IntError(
-                    e.messageInt
-                )
-        } else {
-            _liveData.value =
-                State.Error(
-                    e.localizedMessage
-                )
-        }
-    }
+
     init {
         loadMovies()
     }
 
-    fun loadMovies(page: Int = 1) {
-        uiScope.launchSafe(::handleError) {
-            if (page == 1) {
-                _liveData.value =
-                    State.ShowLoading
-            }
-            val result = withContext(Dispatchers.IO) {
-                val response = movieRepository.getPopularMovies(page)
-                val list = response?.results ?: emptyList()
-                val totalPages = response?.totalPages ?: 0
-                Pair(totalPages, list)
-            }
-            _liveData.postValue(
-                State.Result(
-                    totalPage = result.first,
-                    list = result.second
-                )
-            )
-            _liveData.value =
-                State.HideLoading
-        }
+     fun loadMovies(page: Int = 1) {
+
+
+        disposables.add(
+            movieRepository.getPopularMovies(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    _liveData.value =
+                        State.ShowLoading
+                }
+                .doFinally {
+                    _liveData.value =
+                        State.HideLoading
+                }
+                .subscribe {
+                    val result = {
+                        val response = movieRepository.getPopularMovies(
+                            page
+                        ) as MovieResponseData
+                        val list = response?.results ?: emptyList()
+                        val totalPages = response?.totalPages ?: 0
+                        Pair(totalPages, list)
+                    } as Pair<Int, List<MovieData>>
+                    _liveData.postValue(State.Result(totalPage = result.first, list = result.second ))
+                }
+        )
     }
 
     sealed class State {

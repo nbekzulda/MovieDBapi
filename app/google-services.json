@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "269169863911",
+    "firebase_url": "https://moviedbapi-a2977.firebaseio.com",
+    "project_id": "moviedbapi-a2977",
+    "storage_bucket": "moviedbapi-a2977.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269169863911:android:e2b5c8a4787bee9f58c642",
+        "android_client_info": {
+          "package_name": "com.example.moviedbapi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269169863911-5g63cjevn03d20nivi2shhvl7l81hq3j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.moviedbapi",
+            "certificate_hash": "87f4dbb36665a42c243dcb729333dbdfb34c90d3"
+          }
+        },
+        {
+          "client_id": "269169863911-0amtgvnlgdiatbsp378rqefkil7ep9gq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgVdZiADU_d6pApJqaaugDXV8wJFTModM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269169863911-0amtgvnlgdiatbsp378rqefkil7ep9gq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
