@@ -3,10 +3,11 @@ package com.example.moviedbapi.main.user
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.moviedbapi.additonal.ConnectionFailedException
-import com.example.moviedbapi.additonal.launchSafe
 import com.example.moviedbapi.base.ParentViewModel
 import com.example.moviedbapi.data.models.AccountData
-import com.example.moviedbapi.repository.UserRepository
+import com.example.moviedbapi.data.repositoryIMPL.UserRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -16,18 +17,31 @@ class UserViewModel(private val userRepository: UserRepository): ParentViewModel
         get() = _liveData
 
     fun getAccountDetails(sessionId: String) {
-        _liveData.value =
-            State.ShowLoading
-        uiScope.launchSafe(::handleError) {
-            val result = withContext(Dispatchers.IO) {
-                userRepository.getAccountDetails(sessionId)
+
+        disposables.add(
+            userRepository.getAccountDetails(sessionId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                _liveData.value =
+                    State.ShowLoading
             }
-            _liveData.postValue(
-                State.Result(result)
-            )
-        }
-        _liveData.value =
-            State.HideLoading
+            .doFinally {
+                _liveData.value =
+                    State.HideLoading
+            }
+            .subscribe({result ->
+                _liveData.postValue((State.Result(result)))
+            }, {
+                if (it is ConnectionFailedException) {
+                    _liveData.value = State.IntError(it.messageInt)
+                } else {
+                _liveData.value = State.Error(it.localizedMessage)
+                }
+            })
+        )
+
+
 
     }
 
@@ -39,13 +53,6 @@ class UserViewModel(private val userRepository: UserRepository): ParentViewModel
         data class IntError(val error: Int): State()
     }
 
-    override fun handleError(e: Throwable) {
-        _liveData.value = State.HideLoading
-        if (e is ConnectionFailedException) {
-            _liveData.value = State.IntError(e.messageInt)
-        } else {
-            _liveData.value = State.Error(e.localizedMessage)
-        }
-    }
+
 
 }

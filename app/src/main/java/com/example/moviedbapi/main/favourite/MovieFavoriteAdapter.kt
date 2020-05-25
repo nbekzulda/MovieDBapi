@@ -24,38 +24,6 @@ class MovieFavoriteAdapter(private val itemClickListener: ItemClickListener) : R
     private val movieList = ArrayList<MovieData>()
 
 
-    fun clearAll() {
-        movieList.clear()
-        notifyDataSetChanged()
-    }
-
-    fun removeLoading() {
-        isLoaderVisible = false
-        val position = movieList.size - 1
-        if (movieList.isNotEmpty()) {
-            val item = getItem(position)
-            if (item != null) {
-                movieList.removeAt(position)
-                notifyItemRemoved(position)
-            }
-        }
-    }
-
-    fun getItem(position: Int) : MovieData? {
-        return movieList[position]
-    }
-
-    fun addItems(list: List<MovieData>) {
-        movieList.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    fun addLoading() {
-        isLoaderVisible = true
-        movieList.add(MovieData(id = - 1))
-        notifyItemInserted(movieList.size - 1)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParentViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when(viewType) {
@@ -89,6 +57,38 @@ class MovieFavoriteAdapter(private val itemClickListener: ItemClickListener) : R
             holder.bind(movie)
             holder.setItemClick(movie)
         }
+    }
+
+    fun clearAll() {
+        movieList.clear()
+        notifyDataSetChanged()
+    }
+
+    fun removeLoading() {
+        isLoaderVisible = false
+        val position = movieList.size - 1
+        if (movieList.isNotEmpty()) {
+            val item = getItem(position)
+            if (item != null) {
+                movieList.removeAt(position)
+                notifyItemRemoved(position)
+            }
+        }
+    }
+
+    fun getItem(position: Int) : MovieData? {
+        return movieList[position]
+    }
+
+    fun addItems(list: List<MovieData>) {
+        movieList.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun addLoading() {
+        isLoaderVisible = true
+        movieList.add(MovieData(id = - 1))
+        notifyItemInserted(movieList.size - 1)
     }
 
     inner class MovieViewHolder(view: View): ParentViewHolder(view) {
